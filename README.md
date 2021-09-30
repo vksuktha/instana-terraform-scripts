@@ -2,7 +2,7 @@
 ## Example usage
 ```
 module "instana_instance" {
-  source = "github.com/vksuktha/instana-terraform-scripts?ref=v1.0.0"
+  source = "github.com/vksuktha/instana-terraform-scripts?ref=v1.0.1"
 
   name                 = var.resource_prefix
   resource_group_name  = var.resource_group_name
