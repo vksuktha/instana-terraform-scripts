@@ -187,7 +187,7 @@ resource "null_resource" "instana" {
     private_key = file(var.ssh_instana_private_key_file)
   }
   provisioner "file" {
-    source      = "files"
+    source      = "${path.module}/scripts"
     destination = "/instana/"
   }
   
