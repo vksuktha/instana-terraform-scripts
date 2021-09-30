@@ -1,6 +1,12 @@
 # MAC local file
 .DS_Store
 
+# ssh key-files
+ssh-instana*
+
+# terraform lock files
+.terraform*
+
 # Local .terraform directories
 **/.terraform/*
 
