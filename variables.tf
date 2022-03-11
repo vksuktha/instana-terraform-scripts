@@ -3,34 +3,24 @@ variable "ibmcloud_api_key" {
     description = "The IBM Cloud api token"
 } 
 
+variable "RESOURCE_PREFIX" {
+    type = string
+    description = "The prefix value for resources created by this module"
+}
+
+variable "name" {
+   type = string
+   description = "The name for instana VM to be created"
+}
+ 
 variable "region" {
     type = string
     description = "Geographic location of the resource (e.g. us-south, us-east)"
 }
 
-variable "name" {
-  type = string
-  description = "The name of the Instana VM and prefix to attach with ssh-key resource used for Instana"
-}
-
-variable "subnet_name" {
-  type = string
-  description = "The name of the subnet where Instana VM has be created. Make sure this subnet has Public gateway, so that Instna can be accesssible."
-}
-
-variable "vpc_name" {
-  type = string
-  description = "The name of the VPC where Instana VM has to be created"
-}
-
 variable "zone" {
   type = string
   description = "The IBM Cloud zone"
-}
-
-variable "resource_group_name" {
-  type = string
-  description = "The name of the resource group in which Instana VM and ssh-key need to be created."
 }
 
 variable "sales_id"{

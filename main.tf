@@ -1,29 +1,53 @@
-data "ibm_resource_group" "group" {
-  name = var.resource_group_name
+resource "ibm_resource_group" "group" {
+  name = "${var.RESOURCE_PREFIX}-group"
 }
 
-data "ibm_is_vpc" "vpc" {
-  name           = var.vpc_name
+resource "ibm_is_vpc" "vpc" {
+  name           = "${var.RESOURCE_PREFIX}-vpc"
+  resource_group = ibm_resource_group.group.id
+  
 }
 
-data "ibm_is_subnet" "subnet" {
-  name                     = var.subnet_name
+resource "ibm_is_subnet" "subnet" {
+  name                     = "${var.RESOURCE_PREFIX}-subnet"
+  vpc                      = ibm_is_vpc.vpc.id
+  resource_group           = ibm_resource_group.group.id
+  total_ipv4_address_count = "256"
+  public_gateway           = ibm_is_public_gateway.public-gateway.id
+  zone                     = var.zone
+
+  //User can configure timeouts
+  timeouts {
+    create = "90m"
+    delete = "30m"
+  }
+}
+
+resource "ibm_is_public_gateway" "public-gateway" {
+  name           = "${var.RESOURCE_PREFIX}-public-gateway"
+  vpc            = ibm_is_vpc.vpc.id
+  zone           = var.zone
+  resource_group = ibm_resource_group.group.id
+
+  //User can configure timeouts
+  timeouts {
+    create = "90m"
+  }
 }
 
 resource "ibm_is_ssh_key" "ssh-key" {
-  name           = "${var.name}-key"
+  name           = "${var.RESOURCE_PREFIX}-key"
   public_key     = file(var.ssh_instana_public_key_file)
-  resource_group = data.ibm_resource_group.group.id
+  resource_group = ibm_resource_group.group.id
 }
 
 resource "ibm_is_security_group" "security_group" {
-  vpc = data.ibm_is_vpc.vpc.id
-  resource_group = data.ibm_resource_group.group.id
-  name = "${var.name}-sg"
+  vpc = ibm_is_vpc.vpc.id
+  resource_group = ibm_resource_group.group.id
+  name = "${var.RESOURCE_PREFIX}-sg"
 }
 
 resource "ibm_is_security_group_rule" "sg-rule-inbound-ssh" {
-//  group     = ibm_is_vpc.vpc.security_group[0].group_id
   group     = ibm_is_security_group.security_group.id
   direction = "inbound"
   remote    = "0.0.0.0/0"
@@ -35,7 +59,6 @@ resource "ibm_is_security_group_rule" "sg-rule-inbound-ssh" {
 }
 
 resource "ibm_is_security_group_rule" "sg-rule-http-port" {
-//  group     = ibm_is_vpc.vpc.security_group[0].group_id
   group     = ibm_is_security_group.security_group.id
   direction = "inbound"
   remote    = "0.0.0.0/0"
@@ -47,7 +70,6 @@ resource "ibm_is_security_group_rule" "sg-rule-http-port" {
 }
 
 resource "ibm_is_security_group_rule" "sg-rule-https-port" {
-//  group     = ibm_is_vpc.vpc.security_group[0].group_id
   group     = ibm_is_security_group.security_group.id
   direction = "inbound"
   remote    = "0.0.0.0/0"
@@ -149,15 +171,15 @@ resource "ibm_is_instance" "is_instance" {
   image   = data.ibm_is_image.ubuntu.id
   profile = "bx2-16x64"
 
-  resource_group = data.ibm_resource_group.group.id
+  resource_group = ibm_resource_group.group.id
 
   primary_network_interface {
-    subnet            = data.ibm_is_subnet.subnet.id
+    subnet            = ibm_is_subnet.subnet.id
     security_groups   = [ibm_is_security_group.security_group.id]
     allow_ip_spoofing = true
   }
 
-  vpc  = data.ibm_is_vpc.vpc.id
+  vpc  = ibm_is_vpc.vpc.id
   zone = var.zone
   keys = [ibm_is_ssh_key.ssh-key.id]
 
@@ -174,7 +196,7 @@ resource "ibm_is_instance" "is_instance" {
 resource "ibm_is_floating_ip" "fip" {
   name              = var.name
   target            = ibm_is_instance.is_instance.primary_network_interface[0].id
-  resource_group    = data.ibm_resource_group.group.id
+  resource_group    = ibm_resource_group.group.id
 
 }
 
