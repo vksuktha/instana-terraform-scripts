@@ -1,6 +1,6 @@
 # instana-terraform-scripts 
 
-The script in this repository creates a Resource group, VPC, Subnet, Public Gateway and VM (Virtual Server Instance) with essential security groups, required for Instana installation in the target IBM Cloud account and subnet and installs Instana in it.
+The script in this repository creates a Resource group, VPC, Subnet, Public Gateway and VM (Virtual Server Instance) with essential security groups, required for Instana installation in the target IBM Cloud account and installs Instana in it.
 
 ## Clone the repository
 ```
@@ -35,7 +35,7 @@ ssh_instana_private_key_file="ssh-instana"      # SSH PRIVARTE KEY file path
 ```
 
 ## Module details
-The code available in this repository https://github.com/vksuktha/instana-terraform-scripts can be invoked as a module as follows: 
+The code available in this [repository](https://github.com/vksuktha/instana-terraform-scripts) can be invoked as a module as follows: 
 ```
 module "instana_instance" {
   source = "github.com/vksuktha/instana-terraform-scripts?ref=v1.0.2"
@@ -61,9 +61,9 @@ terraform plan
 terraform apply -auto-approve
 ```
 
-IP address of the VM and credentials to access VM would be displayed after VM is provisioned and Instana setup is complete.
+Instana credentials and IP address of the VM would be displayed after VM is provisioned and Instana setup is complete.
 
-**Note**: The user of the provided API key, needs to have privileges to create resource-group, vpc, sunet, ssh-key and VSI instances and also IP-spoofing Operator. For enabling IP-Spoofing Operator privilege check `IAM prerequisites` section in this [blog](https://www.ibm.com/cloud/blog/network-function-virtualization-nfv-using-vpc-routing)
+**Note**: The user of the provided API key, needs to have privileges to create resource-group, vpc, sunet, ssh-key and VSI instances and also IP-spoofing Operator in IBM Cloud. For enabling IP-Spoofing Operator privilege check `IAM prerequisites` section in this [blog](https://www.ibm.com/cloud/blog/network-function-virtualization-nfv-using-vpc-routing)
 
 ## Access Instana
 
