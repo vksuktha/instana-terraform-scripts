@@ -10,11 +10,11 @@ git clone https://github.com/vksuktha/instana-terraform-scripts
 Instana VM requires an SSH Key, so run the following command to generate it:
 
 ```
-cd terraform-tools-instana
+cd instana-terraform-scripts
 chmod 755 create-ssh-keys.sh
 ./create-ssh-keys.sh
 ```
-Public and private ssh key pair files (`ssh-instana.pub` and `ssh-instana`) gets generated in the project directory.
+Public and private ssh key pair files - `ssh-instana.pub` and `ssh-instana` get generated in the project directory.
 
 ## Provide variable values
 Rename the variable template file `terraform.tfvars.tmpl` to `terraform.tfvars` file and assign values to all variables.
