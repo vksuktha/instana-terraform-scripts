@@ -34,25 +34,6 @@ ssh_instana_public_key_file="ssh-instana.pub"   # SSH PUBLIC KEY file path
 ssh_instana_private_key_file="ssh-instana"      # SSH PRIVARTE KEY file path
 ```
 
-## Module details
-The code available in this [repository](https://github.com/vksuktha/instana-terraform-scripts) can be invoked as a module as follows: 
-```
-module "instana_instance" {
-  source = "github.com/vksuktha/instana-terraform-scripts?ref=v1.0.2"
-
-  name                 = var.name
-  RESOURCE_PREFIX      = var.RESOURCE_PREFIX
-  ibmcloud_api_key     = var.ibmcloud_api_key
-  region               = var.region
-  zone                 = var.zone
-  sales_id             = var.sales_id
-  agent_key            = var.agent_key
-  ssh_instana_public_key_file = var.ssh_instana_public_key_file
-  ssh_instana_private_key_file = var.ssh_instana_private_key_file
-}
-```
-
-
 ## Install Instana
 To create VM and install Instana execute following command:
 ```
@@ -72,4 +53,22 @@ Instana can be accessed though the browser `https://<IP_Address>`. Credentials t
 Instana VM can be accessed using the SSH private key file generated in the project directory earlier.
 ```
 ssh -i ssh_instana root@<IP_Address>
+```
+
+## Module details
+The code available in this [repository](https://github.com/vksuktha/instana-terraform-scripts) can be invoked as a module from external terraform script as follows: 
+```
+module "instana_instance" {
+  source = "github.com/vksuktha/instana-terraform-scripts?ref=v1.0.2"
+
+  name                 = var.name
+  RESOURCE_PREFIX      = var.RESOURCE_PREFIX
+  ibmcloud_api_key     = var.ibmcloud_api_key
+  region               = var.region
+  zone                 = var.zone
+  sales_id             = var.sales_id
+  agent_key            = var.agent_key
+  ssh_instana_public_key_file = var.ssh_instana_public_key_file
+  ssh_instana_private_key_file = var.ssh_instana_private_key_file
+}
 ```
