@@ -63,7 +63,7 @@ terraform apply -auto-approve
 
 Instana credentials and IP address of the VM would be displayed after VM is provisioned and Instana setup is complete.
 
-**Note**: The user of the provided API key, needs to have privileges to create resource-group, vpc, sunet, ssh-key and VSI instances and also IP-spoofing Operator in IBM Cloud. For enabling IP-Spoofing Operator privilege check `IAM prerequisites` section in this [blog](https://www.ibm.com/cloud/blog/network-function-virtualization-nfv-using-vpc-routing)
+**Note**: The user of the provided API key, needs to have privileges to create resource-group, vpc, sunet, ssh-key and VSI instances and also IP-spoofing Operator in IBM Cloud. For enabling IP-Spoofing Operator privilege check `IAM prerequisites` section in this [blog](https://www.ibm.com/cloud/blog/network-function-virtualization-nfv-using-vpc-routing).
 
 ## Access Instana
 
